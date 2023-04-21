@@ -5,6 +5,8 @@
 #ifndef FRAMEWORK_APPLICATION_H
 #define FRAMEWORK_APPLICATION_H
 
+#include <SDL.h>
+
 namespace Framework {
 
 
