@@ -9,13 +9,20 @@
 
 namespace Framework {
 
+    extern SDL_Window* window;
 
 class Application {
 public:
+    Application();
+    virtual ~Application();
 
+    int Run();
 
 protected:
 
+    void Input();
+    void Update(float dt);
+    void Render();
 
 private:
 
