@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.25)
 project(framework)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-subsystem,windows")
 
 find_package(OpenGL REQUIRED)
 add_subdirectory(vendor/sdl2)
@@ -18,5 +17,5 @@ add_library(framework
         src/GL/Meshes/Circle.cpp
         vendor/glad/glad.cpp)
 
-target_include_directories(framework PRIVATE src/ vendor/ vendor/glm)
-target_link_libraries(framework PRIVATE SDL2main SDL2 OpenGL::GL)
+target_include_directories(framework PUBLIC src/ vendor/ vendor/glm)
+target_link_libraries(framework PUBLIC SDL2main SDL2 OpenGL::GL)
