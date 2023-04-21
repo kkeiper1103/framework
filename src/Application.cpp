@@ -6,7 +6,7 @@
 
 using namespace Framework;
 
-SDL_Window* window = nullptr;
+SDL_Window* Framework::window = nullptr;
 
 Application::Application() {
     SDL_Init(SDL_INIT_EVERYTHING);
