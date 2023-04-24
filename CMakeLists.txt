@@ -16,7 +16,7 @@ add_library(framework
         src/GL/Meshes/Triangle.cpp
         src/GL/Meshes/Square.cpp
         src/GL/Meshes/Circle.cpp
-        vendor/glad/glad.cpp src/Utility/Timer.cpp src/Objects/BaseObject.cpp src/Objects/State.cpp)
+        vendor/glad/glad.cpp src/Utility/Timer.cpp src/Objects/BaseObject.cpp src/Objects/State.cpp src/Gui/Nuklear.cpp)
 
 target_include_directories(framework PUBLIC src/ vendor/ vendor/glm)
 target_link_libraries(framework PUBLIC SDL2::SDL2 OpenGL::GL)

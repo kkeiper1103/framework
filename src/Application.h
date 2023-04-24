@@ -8,12 +8,15 @@
 // we define it here because the Application handles initializing SDL
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
+#include <glad/glad.h>
 #include <Utility/Timer.h>
 #include <Objects/BaseObject.h>
+#include <Gui/Nuklear.h>
 
 namespace Framework {
 
     extern SDL_Window* window;
+    extern SDL_GLContext glContext;
 
     struct ApplicationSettings {
         const char* title = "(Application Title)";
@@ -45,6 +48,13 @@ namespace Framework {
     private:
         ApplicationSettings settings;
 
+        void InitNuklear() const;
+
+        void InitGL() const;
+
+        void InitSDL();
+
+        void ApplyGuiStyles(nk_context *pContext) const;
     };
 
 
