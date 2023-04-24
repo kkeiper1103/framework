@@ -10,7 +10,6 @@
 
 using namespace Framework;
 using namespace Framework::Utility;
-using namespace Framework::Gui;
 
 SDL_Window* Framework::window = nullptr;
 SDL_GLContext Framework::glContext = nullptr;
@@ -42,7 +41,7 @@ int Application::Run() {
             Update(dt);
         });
 
-        // (*state)->Gui(ctx);
+        if(state()) state()->Gui(nkContext);
 
         Render();
     }
@@ -82,35 +81,35 @@ void Application::InitGL() const {
     }
 }
 
-void Application::InitNuklear() const {
-    ctx = nk_sdl_init(window);
+void Application::InitNuklear() {
+    nkContext = nk_sdl_init(window);
     struct nk_font_config config = nk_font_config(0);
     struct nk_font *font;
 
-    nk_sdl_font_stash_begin(&atlas);
-    font = nk_font_atlas_add_default(atlas, 13, &config);
+    nk_sdl_font_stash_begin(&nkFontAtlas);
+    font = nk_font_atlas_add_default(nkFontAtlas, 13, &config);
     nk_sdl_font_stash_end();
 
-    nk_style_set_font(ctx, &font->handle);
+    nk_style_set_font(nkContext, &font->handle);
 
-    ApplyGuiStyles(ctx);
+    ApplyGuiStyles(nkContext);
 }
 
 void Application::Input() {
     SDL_Event e;
 
-    nk_input_begin(ctx);
+    nk_input_begin(nkContext);
     while(SDL_PollEvent(&e)) {
 
-        // (*state)->Input(e);
+        if(state()) state()->Input(e);
 
         nk_sdl_handle_event(&e);
     }
-    nk_input_end(ctx);
+    nk_input_end(nkContext);
 }
 
 void Application::Update(float dt) {
-    // (*state)->Update(dt);
+    if(state()) state()->Update(dt);
 }
 
 void Application::Render() {
@@ -118,13 +117,13 @@ void Application::Render() {
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(.1, .1, .1, 1.f);
 
-    // (*state)->Render();
+    if(state()) state()->Render();
 
     nk_sdl_render(NK_ANTI_ALIASING_ON, MAX_VERTEX_MEMORY, MAX_ELEMENT_MEMORY);
     SDL_GL_SwapWindow(window);
 }
 
-void Application::ApplyGuiStyles(nk_context *pContext) const {
+void Application::ApplyGuiStyles(nk_context *pContext) {
     struct nk_color table[NK_COLOR_COUNT];
     table[NK_COLOR_TEXT] = nk_rgba(70, 70, 70, 255);
     table[NK_COLOR_WINDOW] = nk_rgba(175, 175, 175, 255);

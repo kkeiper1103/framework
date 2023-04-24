@@ -12,6 +12,7 @@
 #include <Utility/Timer.h>
 #include <Objects/BaseObject.h>
 #include <Gui/Nuklear.h>
+#include <Objects/State.h>
 
 namespace Framework {
 
@@ -33,6 +34,9 @@ namespace Framework {
 
         int Run();
 
+        void MapStates(const Framework::Objects::States& statesList) {
+            states = statesList;
+        }
 
         template <typename T>
         Objects::Object Create() {
@@ -40,24 +44,29 @@ namespace Framework {
         }
 
     protected:
-
         void Input();
         void Update(float dt);
         void Render();
 
+        std::shared_ptr<Framework::Objects::State> state() {
+            return states[currentStateId];
+        }
+
+    private:
+        struct nk_context* nkContext = nullptr;
+        struct nk_font_atlas* nkFontAtlas = nullptr;
+
+        Objects::StateID currentStateId = Objects::STATE_INTRO;
+        Framework::Objects::States states;
+
     private:
         ApplicationSettings settings;
 
-        void InitNuklear() const;
-
+        void InitNuklear();
         void InitGL() const;
-
         void InitSDL();
-
-        void ApplyGuiStyles(nk_context *pContext) const;
+        void ApplyGuiStyles(nk_context *pContext);
     };
-
-
 }
 
 #endif //FRAMEWORK_APPLICATION_H

@@ -16,9 +16,4 @@
 #include <nuklear/nuklear.h>
 #include <nuklear/nuklear_sdl_gl3.h>
 
-namespace Framework::Gui {
-    extern nk_context* ctx;
-    extern nk_font_atlas* atlas;
-}
-
 #endif //TEMPLATE_NUKLEAR_H
